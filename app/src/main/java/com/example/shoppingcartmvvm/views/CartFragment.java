@@ -70,6 +70,7 @@ public class CartFragment extends Fragment implements CartListAdapter.CartInterf
         fragmentCartBinding.placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                shopViewModel.resetCart();
                 navController.navigate(R.id.action_cartFragment_to_orderFragment);
             }
         });
