@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +17,15 @@ import com.example.shoppingcartmvvm.R;
 import com.example.shoppingcartmvvm.adapters.ShopListAdapter;
 import com.example.shoppingcartmvvm.databinding.FragmentShopBinding;
 import com.example.shoppingcartmvvm.models.Product;
+import com.example.shoppingcartmvvm.viewmodels.ShopViewModel;
+
+import java.util.List;
 
 public class ShopFragment extends Fragment implements ShopListAdapter.ShopInterface {
 
     FragmentShopBinding fragmentShopBinding;
     private ShopListAdapter shopListAdapter;
+    private ShopViewModel shopViewModel;
 
     public ShopFragment() {
         // Required empty public constructor
@@ -37,7 +44,17 @@ public class ShopFragment extends Fragment implements ShopListAdapter.ShopInterf
         super.onViewCreated(view, savedInstanceState);
 
         shopListAdapter = new ShopListAdapter();
-        fragmentShopBinding.shpRecyclerView.setAdapter(shopListAdapter);
+        fragmentShopBinding.shopRecyclerView.setAdapter(shopListAdapter);
+        fragmentShopBinding.shopRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        fragmentShopBinding.shopRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL));
+
+        shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
+        shopViewModel.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                shopListAdapter.submitList(products);
+            }
+        });
     }
 
     @Override
