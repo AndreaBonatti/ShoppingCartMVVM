@@ -30,7 +30,7 @@ public class ShopViewModel extends ViewModel {
         return mutableProduct;
     }
 
-    public LiveData<List<CartItem>> getCart(){
+    public LiveData<List<CartItem>> getCart() {
         return cartRepo.getCart();
     }
 
@@ -40,5 +40,9 @@ public class ShopViewModel extends ViewModel {
 
     public void removeItemFromCart(CartItem cartItem) {
         cartRepo.removeItemFromCart(cartItem);
+    }
+
+    public void changeQuantity(CartItem cartItem, int quantity) {
+        cartRepo.changeQuantity(cartItem, quantity);
     }
 }
