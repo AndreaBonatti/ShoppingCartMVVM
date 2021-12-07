@@ -66,12 +66,14 @@ public class ShopFragment extends Fragment implements ShopListAdapter.ShopInterf
 
     @Override
     public void addItem(Product product) {
-
+//        Log.d(TAG, "addItem: " + product.toString());
+        boolean isAdded = shopViewModel.addItemToCart(product);
+        Log.d(TAG, "addItem: " + product.getName() + " " + isAdded);
     }
 
     @Override
     public void onItemClick(Product product) {
-        Log.d(TAG, "onItemClick: " + product.toString());
+//        Log.d(TAG, "onItemClick: " + product.toString());
         shopViewModel.setProduct(product);
         navController.navigate(R.id.action_shopFragment_to_productDetailFragment);
     }

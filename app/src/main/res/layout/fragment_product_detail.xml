@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -28,10 +27,9 @@
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
-                android:src="@drawable/iphone11"
                 android:productImage="@{shopViewModel.product.imageUrl}"
-                />
+                android:scaleType="fitCenter"
+                android:src="@drawable/iphone11" />
 
             <Space
                 android:layout_width="match_parent"
@@ -80,9 +78,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textSecondary"
                 android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/textSecondary" />
 
             <Space
                 android:layout_width="match_parent"
@@ -94,10 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="@{shopViewModel.product.available}"
+                android:onClick="@{() -> shopViewModel.addItemToCart(shopViewModel.product)}"
                 android:text="Add to cart"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-
-                />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
         </LinearLayout>
 
     </ScrollView>
