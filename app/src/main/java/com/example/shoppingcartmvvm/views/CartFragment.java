@@ -1,18 +1,18 @@
 package com.example.shoppingcartmvvm.views;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.shoppingcartmvvm.R;
 import com.example.shoppingcartmvvm.adapters.CartListAdapter;
@@ -27,7 +27,8 @@ public class CartFragment extends Fragment implements CartListAdapter.CartInterf
     private static final String TAG = "CartFragment";
     ShopViewModel shopViewModel;
     FragmentCartBinding fragmentCartBinding;
-    
+    NavController navController;
+
     public CartFragment() {
         // Required empty public constructor
     }
@@ -44,6 +45,8 @@ public class CartFragment extends Fragment implements CartListAdapter.CartInterf
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        navController = Navigation.findNavController(view);
+
         final CartListAdapter cartListAdapter = new CartListAdapter(this);
         fragmentCartBinding.cartRecyclerView.setAdapter(cartListAdapter);
         fragmentCartBinding.cartRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
@@ -53,6 +56,7 @@ public class CartFragment extends Fragment implements CartListAdapter.CartInterf
             @Override
             public void onChanged(List<CartItem> cartItems) {
                 cartListAdapter.submitList(cartItems);
+                fragmentCartBinding.placeOrderButton.setEnabled(cartItems.size() > 0);
             }
         });
 
@@ -60,6 +64,13 @@ public class CartFragment extends Fragment implements CartListAdapter.CartInterf
             @Override
             public void onChanged(Double aDouble) {
                 fragmentCartBinding.orderTotalTextView.setText("Total: $ " + aDouble.toString());
+            }
+        });
+
+        fragmentCartBinding.placeOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_cartFragment_to_orderFragment);
             }
         });
     }

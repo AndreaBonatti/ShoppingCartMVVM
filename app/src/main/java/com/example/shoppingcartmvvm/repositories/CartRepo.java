@@ -20,7 +20,7 @@ public class CartRepo {
         return mutableCart;
     }
 
-    private void initCart() {
+    public void initCart() {
         mutableCart.setValue(new ArrayList<>());
         calculateCartTotal();
     }
