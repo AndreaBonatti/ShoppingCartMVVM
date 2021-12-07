@@ -61,4 +61,8 @@ public class CartItem {
     public static void getSelectedSpinnerValue(Spinner spinner, int quantity){
         spinner.setSelection(quantity -1, true);
     }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

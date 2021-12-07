@@ -28,7 +28,26 @@ public class CartRepo {
             initCart();
         }
 
+        // controllo il carrello prima di aggiungere un prodotto
+        // se esiste già il prodotto allora e ne ho già 5 non lo aggiungo
+        // se esiste e ne ho meno di 5 lo aggiungo
+        // se non esiste lo aggiungo
         List<CartItem> cartItemList = new ArrayList<>(mutableCart.getValue());
+        for(CartItem cartItem: cartItemList){
+            if(cartItem.getProduct().getId().equals(product.getId())){
+                if(cartItem.getQuantity() == 5){
+                    return false;
+                }
+
+                int index = cartItemList.indexOf(cartItem);
+                cartItem.setQuantity(cartItem.getQuantity() + 1);
+                cartItemList.set(index, cartItem);
+
+                mutableCart.setValue(cartItemList);
+
+                return true;
+            }
+        }
 
         CartItem cartItem = new CartItem(product, 1);
         cartItemList.add(cartItem);
